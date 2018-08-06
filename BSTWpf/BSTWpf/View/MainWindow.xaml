@@ -1,0 +1,36 @@
+﻿<Window x:Class="BSTWpf.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BSTWpf"
+        xmlns:viewModel="clr-namespace:BSTWpf.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <Button Command="{Binding Path=CreateCommand}" Grid.Column="1" Width="80" FontSize="20" Margin="0, 0, 20, 0">Create</Button>
+            <Button Command="{Binding Path=AddCommand}" CommandParameter="{Binding Path=AddValue}" Grid.Column="1" Width="80" FontSize="20" Margin="20, 0">Add</Button>
+            <Button Command="{Binding Path=RemoveCommand}" CommandParameter="{Binding Path=RemoveValue}" Grid.Column="1" Width="80" FontSize="20" Margin="20, 0">Remove</Button>
+            <Button Command="{Binding Path=ClearCommand}" FontSize="20" Width="80" Margin="20,0" Content="Clear"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Label FontSize="18">Your binary tree</Label>
+            <TextBlock Text="{Binding Path=TreeString, Mode=OneWay}" FontSize="18"></TextBlock>
+            <Label FontSize="18">Root of the Tree</Label>
+            <TextBlock Text="{Binding Path=Tree.Root.Value}" FontSize="18"></TextBlock>
+            <Label FontSize="18">What do you want to remove</Label>
+            <TextBox FontSize="18" Text="{Binding Path=RemoveValue}"></TextBox>
+            <Label FontSize="18">What do you want to add</Label>
+            <TextBox FontSize="19" Text="{Binding Path=AddValue}"></TextBox>
+        </StackPanel>
+    </Grid>
+</Window>

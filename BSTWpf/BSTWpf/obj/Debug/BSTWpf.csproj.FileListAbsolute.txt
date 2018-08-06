@@ -1,0 +1,15 @@
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csprojAssemblyReference.cache
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\MainWindow.g.cs
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\App.g.cs
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf_MarkupCompile.cache
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf_MarkupCompile.lref
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\BSTWpf.exe.config
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\BSTWpf.exe
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\BSTWpf.pdb
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\MainWindow.baml
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.g.resources
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.Properties.Resources.resources
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csproj.GenerateResource.cache
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csproj.CoreCompileInputs.cache
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.exe
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.pdb
