@@ -2,7 +2,6 @@
 using BSTWpf.Model;
 using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -47,23 +46,73 @@ namespace BSTWpf.ViewModel
         public ICommand AddCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
         public ICommand ClearCommand { get; private set; }
+        public ICommand GetMinCommand { get; private set; }
+        public ICommand GetMaxCommand { get; private set; }
+        public ICommand ContainsCommand { get; private set; }
 
         public MainWindowViewModel()
         {
             Tree = Tree.GetTree();
             IsCreated = true;
             TreeString = this.Tree.GetString();
-            AddCommand = new DelegateCommand(AddElementToTree, CanAdd);
-            RemoveCommand = new DelegateCommand(RemoveElementFromTree, CanAdd);
+            AddCommand = new DelegateCommand(AddElementToTree, CanEdit);
+            RemoveCommand = new DelegateCommand(RemoveElementFromTree, CanEdit);
             ClearCommand = new DelegateCommand(Clear);
             CreateCommand = new DelegateCommand(CreateTree);
+            GetMinCommand = new DelegateCommand(GetMin, CanEdit);
+            GetMaxCommand = new DelegateCommand(GetMax, CanEdit);
+            ContainsCommand = new DelegateCommand(Contains, CanEdit);
+        }
+
+        private void Contains(object obj)
+        {
+            if (Tree == null) MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                string result;
+
+                View.ContainsWindow containsWindow = new View.ContainsWindow();
+
+                if (containsWindow.ShowDialog() == true)
+                {
+                    result = (Tree.Contains(containsWindow.Value) ? "Exists" : "Doesn`t exists!");
+                    MessageBox.Show(result, "Result", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+                else MessageBox.Show("Invalid Operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void GetMax(object obj)
+        {
+            try
+            {
+                MessageBox.Show("Maximum: " + Tree.GetMax(), "INFO", MessageBoxButton.OK);
+            }
+            catch (NullReferenceException) { MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+
+        private void GetMin(object obj)
+        {
+            try
+            {
+                MessageBox.Show("Minimum: " + Tree.GetMin(), "INFO", MessageBoxButton.OK);
+            }
+            catch(NullReferenceException) { MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void CreateTree(object obj)
         {
-            Tree = Tree.GetTree();
+            View.CreateTreeWindow createTreeWindow = new View.CreateTreeWindow();
+
+            if (createTreeWindow.ShowDialog() == true)
+            {
+                this.Tree = new Tree(createTreeWindow.Doubles);
+                TreeString = Tree.GetString();
+                MessageBox.Show("Your tree has created succesfully!","Succes",MessageBoxButton.OK,MessageBoxImage.Information);
+            }
+            else MessageBox.Show("Creating failed","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+
             IsCreated = true;
-            TreeString = Tree.GetString();
         }
 
         private void Clear(object obj)
@@ -72,7 +121,7 @@ namespace BSTWpf.ViewModel
             TreeString = "";
         }
 
-        private bool CanAdd(object arg)
+        private bool CanEdit(object arg)
         {
             return IsCreated;
         }

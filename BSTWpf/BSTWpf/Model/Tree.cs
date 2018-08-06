@@ -28,7 +28,6 @@ namespace BSTWpf.Model
 
         public Tree(double[] arr)
         {
-            arr.Sort();
             this.MakeTree(arr);
         }
 

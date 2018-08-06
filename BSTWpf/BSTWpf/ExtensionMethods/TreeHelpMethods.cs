@@ -1,4 +1,5 @@
-﻿using BSTWpf.Model;
+﻿using System;
+using BSTWpf.Model;
 
 namespace BSTWpf.ExtensionMethods
 {
@@ -26,7 +27,8 @@ namespace BSTWpf.ExtensionMethods
         #region MakeTree
         public static void MakeTree(this Tree tree, double[] arr)
         {
-            tree.Root = CreateBalancedTree(arr, 0, arr.Length - 1);
+                arr.Sort();
+                tree.Root = CreateBalancedTree(arr, 0, arr.Length - 1);
         }
 
         private static Node CreateBalancedTree(double[] arr, int start, int end)
@@ -218,6 +220,32 @@ namespace BSTWpf.ExtensionMethods
         public static void Sort(this double[] arr)
         {
             HeapSort.HeapSortDo(arr, arr.Length);
+        }
+
+        public static double GetMin(this Tree tree)
+        {
+            Node val = tree.Root;
+            return FindMinimum(ref val);
+        }
+
+        private static double FindMinimum(ref Node val)
+        {
+            var temp = val.Left;
+            if (temp != null) { return FindMinimum(ref temp); }
+            else return val.Value;
+        }
+
+        public static double GetMax(this Tree tree)
+        {
+            Node val = tree.Root;
+            return FindMaximum(ref val);
+        }
+
+        private static double FindMaximum(ref Node val)
+        {
+            var temp = val.Right;
+            if (temp != null) { return FindMaximum(ref temp); }
+            else return val.Value;
         }
     }
 }

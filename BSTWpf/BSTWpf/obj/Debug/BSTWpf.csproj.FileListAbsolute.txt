@@ -13,3 +13,7 @@ D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csproj.GenerateResource.cache
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csproj.CoreCompileInputs.cache
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.exe
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.pdb
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\CreateTreeWindow.g.cs
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\CreateTreeWindow.baml
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\ContainsWindow.g.cs
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\ContainsWindow.baml

@@ -17,9 +17,11 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="1">
-            <Button Command="{Binding Path=CreateCommand}" Grid.Column="1" Width="80" FontSize="20" Margin="0, 0, 20, 0">Create</Button>
-            <Button Command="{Binding Path=AddCommand}" CommandParameter="{Binding Path=AddValue}" Grid.Column="1" Width="80" FontSize="20" Margin="20, 0">Add</Button>
+            <Button Command="{Binding Path=AddCommand}" CommandParameter="{Binding Path=AddValue}" Grid.Column="1" Width="80" FontSize="20" Margin="0,0,20, 0">Add</Button>
             <Button Command="{Binding Path=RemoveCommand}" CommandParameter="{Binding Path=RemoveValue}" Grid.Column="1" Width="80" FontSize="20" Margin="20, 0">Remove</Button>
+            <Button Command="{Binding Path=GetMinCommand}" Width="80" FontSize="17" Margin="20, 0">Minimum</Button>
+            <Button Command="{Binding Path=GetMaxCommand}" Width="80" FontSize="17" Margin="20, 0">Maximum</Button>
+            <Button Command="{Binding Path=ContainsCommand}" Width="80" FontSize="18" Margin="20, 0">Contains</Button>
             <Button Command="{Binding Path=ClearCommand}" FontSize="20" Width="80" Margin="20,0" Content="Clear"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1">
@@ -31,6 +33,9 @@
             <TextBox FontSize="18" Text="{Binding Path=RemoveValue}"></TextBox>
             <Label FontSize="18">What do you want to add</Label>
             <TextBox FontSize="19" Text="{Binding Path=AddValue}"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <Button Command="{Binding Path=CreateCommand}" Grid.Column="1" Height="40" Margin="0,0,0,20" FontSize="20" >Create</Button>
         </StackPanel>
     </Grid>
 </Window>
