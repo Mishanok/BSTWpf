@@ -181,10 +181,18 @@ namespace BSTWpf.ExtensionMethods
 
                 if (parent == null)
                 {
-                    tree.Root = temp;
-                    par.Left = temp.Right;
-                    tree.Root.Left = current.Left;
-                    tree.Root.Right = current.Right;
+                    if (par != current)
+                    {
+                        tree.Root = temp;
+                        par.Left = temp.Right;
+                        tree.Root.Left = current.Left;
+                        tree.Root.Right = current.Right;
+                    }
+                    else
+                    {
+                        tree.Root = temp;
+                        temp.Left = current.Left;
+                    }
                 }
                 else
                 {

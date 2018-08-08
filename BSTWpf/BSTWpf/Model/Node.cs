@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace BSTWpf.Model
 {
-    public class Node : INotifyPropertyChanged, IComparable 
+    public class Node : INotifyPropertyChanged, IComparable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string propertyName)
@@ -19,6 +19,10 @@ namespace BSTWpf.Model
         private double value;
         private Node left;
         private Node right;
+
+        public int ID { get; set; }
+        public int? TreeID { get; set; }
+        public virtual Tree Tree { get; set; }
 
         public double Value
         {

@@ -17,3 +17,9 @@ D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\CreateTreeWindow.g.cs
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\CreateTreeWindow.baml
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\ContainsWindow.g.cs
 D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\View\ContainsWindow.baml
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\EntityFramework.dll
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\EntityFramework.SqlServer.dll
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\EntityFramework.xml
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\EntityFramework.SqlServer.xml
+D:\App\Applications\BSTWpf\BSTWpf\bin\Debug\ru\EntityFramework.resources.dll
+D:\App\Applications\BSTWpf\BSTWpf\obj\Debug\BSTWpf.csproj.CopyComplete

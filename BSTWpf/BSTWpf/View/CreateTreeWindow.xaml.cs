@@ -18,6 +18,7 @@ namespace BSTWpf.View
         {
             this.DialogResult = true;
             MakeArray();
+            this.Name = nameBox.Text;
         }
 
         private void MakeArray()
@@ -37,8 +38,7 @@ namespace BSTWpf.View
             Doubles = list.ToArray();
         }
 
-        private double[] doubles;
-
         public double[] Doubles { get; private set; }
+        public new string Name { get; private set; }
     }
 }

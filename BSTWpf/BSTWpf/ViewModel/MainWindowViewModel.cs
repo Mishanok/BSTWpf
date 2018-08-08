@@ -1,6 +1,8 @@
 ﻿using BSTWpf.ExtensionMethods;
 using BSTWpf.Model;
+using BSTWpf.Model.DBModel;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
@@ -15,20 +17,15 @@ namespace BSTWpf.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        string treeString;
-        Tree tree;
+        Tree selectedTree;
         string removeValue;
         string addValue;
 
-        public Tree Tree
+        public ObservableCollection<Tree> Trees { get; private set; }
+        public Tree SelectedTree
         {
-            get { return tree; }
-            set { tree = value; OnPropertyChanged("Tree"); }
-        }
-        public string TreeString
-        {
-            get { return treeString; }
-            set { treeString = value; OnPropertyChanged("TreeString"); }
+            get { return selectedTree; }
+            set { selectedTree = value; OnPropertyChanged("SelectedTree"); }
         }
         public string RemoveValue
         {
@@ -49,12 +46,13 @@ namespace BSTWpf.ViewModel
         public ICommand GetMinCommand { get; private set; }
         public ICommand GetMaxCommand { get; private set; }
         public ICommand ContainsCommand { get; private set; }
+        public ICommand DeleteCommand { get; private set; }
+        public ICommand SaveCommand { get; private set; }
 
         public MainWindowViewModel()
         {
-            Tree = Tree.GetTree();
-            IsCreated = true;
-            TreeString = this.Tree.GetString();
+            Trees = new ObservableCollection<Tree>();
+            Trees.Add(Tree.GetTree());
             AddCommand = new DelegateCommand(AddElementToTree, CanEdit);
             RemoveCommand = new DelegateCommand(RemoveElementFromTree, CanEdit);
             ClearCommand = new DelegateCommand(Clear);
@@ -62,11 +60,31 @@ namespace BSTWpf.ViewModel
             GetMinCommand = new DelegateCommand(GetMin, CanEdit);
             GetMaxCommand = new DelegateCommand(GetMax, CanEdit);
             ContainsCommand = new DelegateCommand(Contains, CanEdit);
+            DeleteCommand = new DelegateCommand(DeleteTree, CanEdit);
+            SaveCommand = new DelegateCommand(SaveChanges);
+        }
+
+        private void SaveChanges(object obj)
+        {
+            using (TreesContext context = new TreesContext())
+            {
+                foreach(var item in (ObservableCollection<Tree>)obj)
+                {
+                    context.Trees.Add(item);
+                }
+
+                context.SaveChanges();
+            }
+        }
+
+        private void DeleteTree(object obj)
+        {
+            Trees.Remove((Tree)obj);
         }
 
         private void Contains(object obj)
         {
-            if (Tree == null) MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (SelectedTree == null) MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
                 string result;
@@ -75,8 +93,12 @@ namespace BSTWpf.ViewModel
 
                 if (containsWindow.ShowDialog() == true)
                 {
-                    result = (Tree.Contains(containsWindow.Value) ? "Exists" : "Doesn`t exists!");
+                    result = (SelectedTree.Contains(containsWindow.Value) ? "Exists" : "Doesn`t exists!");
                     MessageBox.Show(result, "Result", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+                else if (containsWindow.DialogResult.HasValue && !containsWindow.DialogResult.Value)
+                {
+                    return;
                 }
                 else MessageBox.Show("Invalid Operation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -86,7 +108,7 @@ namespace BSTWpf.ViewModel
         {
             try
             {
-                MessageBox.Show("Maximum: " + Tree.GetMax(), "INFO", MessageBoxButton.OK);
+                MessageBox.Show("Maximum: " + SelectedTree.GetMax(), "INFO", MessageBoxButton.OK);
             }
             catch (NullReferenceException) { MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
@@ -95,7 +117,7 @@ namespace BSTWpf.ViewModel
         {
             try
             {
-                MessageBox.Show("Minimum: " + Tree.GetMin(), "INFO", MessageBoxButton.OK);
+                MessageBox.Show("Minimum: " + SelectedTree.GetMin(), "INFO", MessageBoxButton.OK);
             }
             catch(NullReferenceException) { MessageBox.Show("No active tree", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
@@ -106,19 +128,19 @@ namespace BSTWpf.ViewModel
 
             if (createTreeWindow.ShowDialog() == true)
             {
-                this.Tree = new Tree(createTreeWindow.Doubles);
-                TreeString = Tree.GetString();
+                Trees.Add(new Tree(createTreeWindow.Doubles, createTreeWindow.Name));
                 MessageBox.Show("Your tree has created succesfully!","Succes",MessageBoxButton.OK,MessageBoxImage.Information);
             }
+            else if(createTreeWindow.DialogResult.HasValue && !createTreeWindow.DialogResult.Value)
+            {
+                return;
+            }
             else MessageBox.Show("Creating failed","Error",MessageBoxButton.OK, MessageBoxImage.Error);
-
-            IsCreated = true;
         }
 
         private void Clear(object obj)
         {
-            Tree = null;
-            TreeString = "";
+            SelectedTree = null;
         }
 
         private bool CanEdit(object arg)
@@ -131,9 +153,10 @@ namespace BSTWpf.ViewModel
             try
             {
                 if (obj != null)
-                    this.Tree.Remove(Convert.ToDouble(obj));
+                    this.SelectedTree.Remove(Convert.ToDouble(obj));
 
-                TreeString = Tree.GetString();
+                SelectedTree.TreeString = null;
+                SelectedTree.TreeString = SelectedTree.GetString();
             }
             catch (NullReferenceException)
             {
@@ -149,8 +172,8 @@ namespace BSTWpf.ViewModel
         {
             try
             {
-                this.Tree.AddItem(Convert.ToDouble(obj));
-                TreeString = Tree.GetString();
+                this.SelectedTree.AddItem(Convert.ToDouble(obj));
+                SelectedTree.TreeString = SelectedTree.GetString();
             }
             catch (NullReferenceException) { MessageBox.Show("You need to create tree first", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
             catch (FormatException) { MessageBox.Show("Incorect input","Error",MessageBoxButton.OK, MessageBoxImage.Error); }

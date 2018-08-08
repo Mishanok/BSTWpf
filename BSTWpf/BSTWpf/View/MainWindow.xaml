@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="110"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -22,20 +22,40 @@
             <Button Command="{Binding Path=GetMinCommand}" Width="80" FontSize="17" Margin="20, 0">Minimum</Button>
             <Button Command="{Binding Path=GetMaxCommand}" Width="80" FontSize="17" Margin="20, 0">Maximum</Button>
             <Button Command="{Binding Path=ContainsCommand}" Width="80" FontSize="18" Margin="20, 0">Contains</Button>
-            <Button Command="{Binding Path=ClearCommand}" FontSize="20" Width="80" Margin="20,0" Content="Clear"/>
+            <Button Command="{Binding Path=ClearCommand}" FontSize="20" Width="80" Content="Clear"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1">
             <Label FontSize="18">Your binary tree</Label>
-            <TextBlock Text="{Binding Path=TreeString, Mode=OneWay}" FontSize="18"></TextBlock>
+            <TextBlock Text="{Binding Path=SelectedTree.TreeString, Mode=OneWay}" FontSize="18"></TextBlock>
             <Label FontSize="18">Root of the Tree</Label>
-            <TextBlock Text="{Binding Path=Tree.Root.Value}" FontSize="18"></TextBlock>
+            <TextBlock Text="{Binding Path=SelectedTree.Root.Value}" FontSize="18"></TextBlock>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
+            <Label></Label>
             <Label FontSize="18">What do you want to remove</Label>
             <TextBox FontSize="18" Text="{Binding Path=RemoveValue}"></TextBox>
             <Label FontSize="18">What do you want to add</Label>
             <TextBox FontSize="19" Text="{Binding Path=AddValue}"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Vertical">
-            <Button Command="{Binding Path=CreateCommand}" Grid.Column="1" Height="40" Margin="0,0,0,20" FontSize="20" >Create</Button>
+            <ListBox Height="250" ItemsSource="{Binding Path=Trees}" SelectedItem="{Binding Path=SelectedTree}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding Path=CreateCommand}" Height="40" Margin="0,0,0,20" FontSize="20" >New</Button>
+            <Button Command="{Binding Path=DeleteCommand}" CommandParameter="{Binding Path=SelectedTree}" Height="40" Margin="0,0,0,20" FontSize="20" >Delete</Button>
         </StackPanel>
+        <Button FontSize="25" Command="{Binding Path=SaveCommand}" CommandParameter="{Binding Path=Trees}">Save</Button>
     </Grid>
 </Window>
